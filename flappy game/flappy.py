@@ -17,6 +17,8 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('Flappy bird clone')
 clock = pygame.time.Clock()
 
+gravity = 0
+
 class Bird(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
@@ -42,9 +44,18 @@ while run:
     for event in pygame.event.get():
         if event.type == QUIT:
             run = False
+            
+        if event.type == KEYDOWN:
+            if event.key == K_SPACE:
+                gravity = 0
+                gravity -=5
+            
+    gravity += 0.25
+    bird.rect.y += gravity
      
      
-    all_sprites.update()       
+    all_sprites.update()
+    screen.fill(BLACK)       
     all_sprites.draw(screen)
     
     pygame.display.flip()
