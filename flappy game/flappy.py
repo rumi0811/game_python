@@ -21,18 +21,50 @@ gravity = 0
 
 class Bird(pygame.sprite.Sprite):
     def __init__(self):
-        super().__init__()
-        
+        super().__init__()        
         self.image = pygame.Surface((20, 20))  
         self.image.fill(BLUE)      
         self.rect = self.image.get_rect()        
         self.rect.x = 50
         self.rect.y = HEIGHT // 2
         
+class Pipa(pygame.sprite.Sprite):
+    def __init__(self):
+        super().__init__() 
+        self.image = pygame.Surface((20, 500))
+        self.image.fill(GREEN)
+        self.rect = self.image.get_rect()
+        self.rect.x = 400 + 10
+        
+    def update(self):
+        self.rect.x -= 4
+        if self.rect.x <= -20:
+            self.rect.x = WIDTH +10
+        
+    
+class Top(Pipa):
+    def __init__(self, y):
+        super().__init__()   
+        self.rect.y = y     
+        
+class Bottom(Pipa):
+    def __init__(self, y):
+        super().__init__()   
+        self.rect.y = y
         
 all_sprites = pygame.sprite.Group()
+pipas = pygame.sprite.Group()
 bird = Bird()
 
+
+for i in range(2):
+    p1 = Top(-300)
+    p2 = Bottom(350)
+    pipas.add(p1)
+    pipas.add(p2)
+    all_sprites.add(p1)
+    all_sprites.add(p2)
+    
 all_sprites.add(bird)
 
 
